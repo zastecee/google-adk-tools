@@ -1,0 +1,72 @@
+[
+  {
+    "DCS_DATE": "2023-04-01 00:00:00.0",
+    "DCS_DESCRIPTION": "Voice Users",
+    "DCS_TOTAL_PREPAID": "17",
+    "DCS_TOTAL_HYBRID": null,
+    "DCS_TOTAL": "17",
+    "DCS_PROVINCE": "Zambezia",
+    "DCS_REGION": "Center",
+    "DCS_SEGMENT": "MASS",
+    "DCS_BUSINESS": null,
+    "DCS_DISTRICT": "Maganja-Da-Costa",
+    "DCS_BEHAVIOR": "LOW. ACT. SPENDERS",
+    "DCS_USAGE_SEGMENT": null
+  },
+  {
+    "DCS_DATE": "2023-04-01 00:00:00.0",
+    "DCS_DESCRIPTION": "Voice Users",
+    "DCS_TOTAL_PREPAID": "3",
+    "DCS_TOTAL_HYBRID": null,
+    "DCS_TOTAL": "3",
+    "DCS_PROVINCE": "Zambezia",
+    "DCS_REGION": "Center",
+    "DCS_SEGMENT": "YOUTH",
+    "DCS_BUSINESS": null,
+    "DCS_DISTRICT": "Namarroi",
+    "DCS_BEHAVIOR": "LOW. ACT. SPENDERS",
+    "DCS_USAGE_SEGMENT": null
+  },
+  {
+    "DCS_DATE": "2023-04-01 00:00:00.0",
+    "DCS_DESCRIPTION": "Voice Users",
+    "DCS_TOTAL_PREPAID": "4653",
+    "DCS_TOTAL_HYBRID": null,
+    "DCS_TOTAL": "4653",
+    "DCS_PROVINCE": "Inhambane",
+    "DCS_REGION": "South",
+    "DCS_SEGMENT": "YOUTH",
+    "DCS_BUSINESS": null,
+    "DCS_DISTRICT": "Maxixe",
+    "DCS_BEHAVIOR": "LOYALIST",
+    "DCS_USAGE_SEGMENT": null
+  },
+  {
+    "DCS_DATE": "2023-04-01 00:00:00.0",
+    "DCS_DESCRIPTION": "Voice Users",
+    "DCS_TOTAL_PREPAID": "6",
+    "DCS_TOTAL_HYBRID": null,
+    "DCS_TOTAL": "6",
+    "DCS_PROVINCE": "Inhambane",
+    "DCS_REGION": "SOUTH",
+    "DCS_SEGMENT": "MASS",
+    "DCS_BUSINESS": null,
+    "DCS_DISTRICT": "Inharrime",
+    "DCS_BEHAVIOR": "LOYALIST",
+    "DCS_USAGE_SEGMENT": null
+  },
+  {
+    "DCS_DATE": "2023-04-01 00:00:00.0",
+    "DCS_DESCRIPTION": "Voice Users",
+    "DCS_TOTAL_PREPAID": "1",
+    "DCS_TOTAL_HYBRID": null,
+    "DCS_TOTAL": "1",
+    "DCS_PROVINCE": "Zambezia",
+    "DCS_REGION": "CENTRAL",
+    "DCS_SEGMENT": "MASS",
+    "DCS_BUSINESS": null,
+    "DCS_DISTRICT": "Alto-Molocue",
+    "DCS_BEHAVIOR": "LOW. ACT. SPENDERS",
+    "DCS_USAGE_SEGMENT": null
+  }
+]

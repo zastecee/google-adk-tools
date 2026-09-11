@@ -1,0 +1,110 @@
+[
+  {
+    "EVENT_DATE": "2026-05-11 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "IMT",
+    "REVENUE": "326511"
+  },
+  {
+    "EVENT_DATE": "2026-05-14 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "IMT",
+    "REVENUE": "191149"
+  },
+  {
+    "EVENT_DATE": "2026-05-23 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "IMT",
+    "REVENUE": "173581"
+  },
+  {
+    "EVENT_DATE": "2026-05-31 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "IMT",
+    "REVENUE": "179620"
+  },
+  {
+    "EVENT_DATE": "2026-05-12 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "IMT",
+    "REVENUE": "228572"
+  },
+  {
+    "EVENT_DATE": "2026-05-04 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "IMT",
+    "REVENUE": "283547"
+  },
+  {
+    "EVENT_DATE": "2026-03-03 00:00:00.0",
+    "VERTICAL": "Financial Services",
+    "PRODUCT": "Funeral Insurance",
+    "REVENUE": "949.33"
+  },
+  {
+    "EVENT_DATE": "2026-03-09 00:00:00.0",
+    "VERTICAL": "Financial Services",
+    "PRODUCT": "Funeral Insurance",
+    "REVENUE": "888.7"
+  },
+  {
+    "EVENT_DATE": "2026-03-19 00:00:00.0",
+    "VERTICAL": "Financial Services",
+    "PRODUCT": "Funeral Insurance",
+    "REVENUE": "330.76"
+  },
+  {
+    "EVENT_DATE": "2026-03-12 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "AIRTIME",
+    "REVENUE": "1085992.94"
+  },
+  {
+    "EVENT_DATE": "2026-03-31 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "AIRTIME",
+    "REVENUE": "1138250.93"
+  },
+  {
+    "EVENT_DATE": "2026-03-24 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "AIRTIME",
+    "REVENUE": "1043735.59"
+  },
+  {
+    "EVENT_DATE": "2026-03-30 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "AIRTIME",
+    "REVENUE": "1100460.14"
+  },
+  {
+    "EVENT_DATE": "2026-06-30 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "P2P",
+    "REVENUE": "2619762.46"
+  },
+  {
+    "EVENT_DATE": "2026-06-14 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "P2P",
+    "REVENUE": "2026759.56"
+  },
+  {
+    "EVENT_DATE": "2026-06-17 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "P2P",
+    "REVENUE": "2283913.52"
+  },
+  {
+    "EVENT_DATE": "2026-06-07 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "P2P",
+    "REVENUE": "2081499.42"
+  },
+  {
+    "EVENT_DATE": "2026-07-20 00:00:00.0",
+    "VERTICAL": "Core",
+    "PRODUCT": "P2P",
+    "REVENUE": "2441212.34"
+  }
+]

@@ -1,0 +1,47 @@
+
+
+Traffic
+
+Voice Traffic - Billed ++
+Voice Traffic - Free ++
+Voice Traffic - OOB ++
+Data Traffic - Billed ++
+Data Traffic - Free ++
+Data Traffic - OOB ++
+Sms Traffic - Billed ++
+Sms Traffic - Free ++
+Sms Traffic - OOB ++
+M-Pesa Paybill ----------------------
+M-Pesa P2P ++
+M-Pesa Withdrawal ++
+M-Pesa Others ++
+Interconnect Local -> Soma (Movitel + mCel + TDM) ++
+Interconnect Local - Movitel ++
+Interconnect Local - mCel ++
+Interconnect Local - TDM ++
+Interconnect International ++
+Inflows -------------------------------
+Outflows ------------------------------
+
+
+Costumers
+
+Active GSM ++
+Voice Users ++
+Data Users ++
+Sms Users ++
+Active Mpesa base ++
+Total Revenue Users ++
+Voice Revenue Users ++
+Data Revenue Users ++
+Sms Revenue Users ++
+Total Buyers ++
+Voice Buyers ++
+Data Buyers ++
+Sms Buyers ++
+30 Days Active SUBID ++
+30 Days Active GSM SUBID ++
+30 Days Voice Users SUBID ++
+30 Days Data Users SUBID ++
+30 Days Sms Users SUBID ++
+etc...

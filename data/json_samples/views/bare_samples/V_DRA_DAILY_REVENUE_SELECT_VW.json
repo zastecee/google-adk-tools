@@ -1,0 +1,155 @@
+[
+  {
+    "OC_DATE": "2026-03-01 00:00:00.0",
+    "SERVICE_NAME": "Core",
+    "DR_PREPAID": "8629017.12",
+    "DR_HYBRID": "8629017.12",
+    "DR_TOTAL": "8629017.12",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-01 00:00:00.0",
+    "SERVICE_NAME": "Financial Services",
+    "DR_PREPAID": "1312905.63",
+    "DR_HYBRID": "1312905.63",
+    "DR_TOTAL": "1312905.63",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-01 00:00:00.0",
+    "SERVICE_NAME": "Mpesa",
+    "DR_PREPAID": "13048228.366864072",
+    "DR_HYBRID": "13048228.366864072",
+    "DR_TOTAL": "13048228.366864072",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-01 00:00:00.0",
+    "SERVICE_NAME": "Payments",
+    "DR_PREPAID": "3106305.62",
+    "DR_HYBRID": "3106305.62",
+    "DR_TOTAL": "3106305.62",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-02 00:00:00.0",
+    "SERVICE_NAME": "Core",
+    "DR_PREPAID": "12462506.08",
+    "DR_HYBRID": "12462506.08",
+    "DR_TOTAL": "12462506.08",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-02 00:00:00.0",
+    "SERVICE_NAME": "Financial Services",
+    "DR_PREPAID": "1654372.3",
+    "DR_HYBRID": "1654372.3",
+    "DR_TOTAL": "1654372.3",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-02 00:00:00.0",
+    "SERVICE_NAME": "Mpesa",
+    "DR_PREPAID": "18103167.631396208",
+    "DR_HYBRID": "18103167.631396208",
+    "DR_TOTAL": "18103167.631396208",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-02 00:00:00.0",
+    "SERVICE_NAME": "Payments",
+    "DR_PREPAID": "3986289.25",
+    "DR_HYBRID": "3986289.25",
+    "DR_TOTAL": "3986289.25",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-03 00:00:00.0",
+    "SERVICE_NAME": "Core",
+    "DR_PREPAID": "11737156.3",
+    "DR_HYBRID": "11737156.3",
+    "DR_TOTAL": "11737156.3",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-03 00:00:00.0",
+    "SERVICE_NAME": "Financial Services",
+    "DR_PREPAID": "1424830.29",
+    "DR_HYBRID": "1424830.29",
+    "DR_TOTAL": "1424830.29",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-03 00:00:00.0",
+    "SERVICE_NAME": "Mpesa",
+    "DR_PREPAID": "16969309.8220388",
+    "DR_HYBRID": "16969309.8220388",
+    "DR_TOTAL": "16969309.8220388",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-03 00:00:00.0",
+    "SERVICE_NAME": "Payments",
+    "DR_PREPAID": "3807323.23",
+    "DR_HYBRID": "3807323.23",
+    "DR_TOTAL": "3807323.23",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-04 00:00:00.0",
+    "SERVICE_NAME": "Core",
+    "DR_PREPAID": "11118938.46",
+    "DR_HYBRID": "11118938.46",
+    "DR_TOTAL": "11118938.46",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-04 00:00:00.0",
+    "SERVICE_NAME": "Financial Services",
+    "DR_PREPAID": "1320035.22",
+    "DR_HYBRID": "1320035.22",
+    "DR_TOTAL": "1320035.22",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-04 00:00:00.0",
+    "SERVICE_NAME": "Mpesa",
+    "DR_PREPAID": "15784315.978220376",
+    "DR_HYBRID": "15784315.978220376",
+    "DR_TOTAL": "15784315.978220376",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-04 00:00:00.0",
+    "SERVICE_NAME": "Payments",
+    "DR_PREPAID": "3345342.29",
+    "DR_HYBRID": "3345342.29",
+    "DR_TOTAL": "3345342.29",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  },
+  {
+    "OC_DATE": "2026-03-05 00:00:00.0",
+    "SERVICE_NAME": "Core",
+    "DR_PREPAID": "11092703.24",
+    "DR_HYBRID": "11092703.24",
+    "DR_TOTAL": "11092703.24",
+    "PROVINCE": "Unknown",
+    "BUSINESS_SEGMENT": "PREPAID"
+  }
+]

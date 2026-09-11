@@ -1,0 +1,51 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Jupyter / notebook
+.ipynb_checkpoints/
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# CSV
+**/*.csv
+
+# CSV files
+*.csv
+
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project outputs (keep if you do not want to track generated artifacts)
+output/

@@ -1,0 +1,102 @@
+
+
+
+
+Reporte do dia (todos kpi)
+De-me o reporte do dia 6 (Revenue, customers, Traffic, , junto com o seu respectivo graficos)
+
+
+
+
+
+--- Customer e Traffic --------------------
+
+BO.V_DRA_DAILY_CUSTOMERS_SELECT
+
+--- 
+
+a   b   c     a   b   c   *
+1   X   P
+1   X   P     1   X   P   2
+1   X   Q ->  1   X   Q   1
+2   Y   P     2   Y   P   1
+
+
+---------------------- Nos ultimos 5 meses -----------------------
+
+WHERE DC_DATE >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -5)
+AND DC_DATE < TRUNC(SYSDATE)
+
+1. TRUNC(SYSDATE,'MM') -> TRUNC(04-Aug-2026, 'MM') -> 01-Aug-2026
+2. ADD_MONTHS(01-Aug-2026,-5) -> volta 5 meses -> 01-Mar-2026
+
+WHERE DC_DATE >= 01-Mar-2026
+AND DC_DATE < 04-Aug-2026
+
+Hoje: 04-Aug-2026
+
+Intervalo: 01-Mar-2026 até 03-Aug-2026
+
+---------------------
+
+SELECT /*+PARALLEL(15)*/
+ TRUNC(DC_DATE, 'MM') PP_MONTH,                         -- "2026-04-01 00:00:00.0" -> GROUP +
+ BO.GET_WEEK_NUM(DC_DATE) WEEK_NUM,                     -- "W3" -> GROUP +
+ BO.GET_SAME_DAY(DC_DATE) SAME_DAY,                     -- "2026-08-15 00:00:00.0" -> GROUP
+ TO_CHAR(DC_DATE, 'DY') WEEK_DAY,                       -- "SAT" -> GROUP +
+ BO.GET_DATE_MTD(DC_DATE) DATE_MTD,                     -- "PM1TD"  -> GROUP
+ D.DC_DATE,                                             -- "2026-04-18 00:00:00.0" -> GROUP +
+ D.EVENT_DESCRIPTION,                                   -- "30 Days Smartphone Users" -> GROUP +
+ SUM(D.DC_PREPAD) DC_PREPAD,                            -- "4265"
+ SUM(D.DC_HYBRID) DC_HYBRID,                            -- "98"
+ SUM(D.DC_TOTAL) DC_TOTAL,                              -- "4450"
+ D.DC_PROVINCE,                                         -- "Manica" -> GROUP +
+ D.DC_SEGMENT,                                          -- "HIGH" -> GROUP +
+ NULL,                                                  -- null
+ TO_CHAR(TRUNC(DC_DATE, 'mm'), 'MM') MMONTH,            -- "04"
+ TO_CHAR(TRUNC(DC_DATE, 'dd'), 'DD') DDATE,             -- "18"
+ TO_CHAR(TRUNC(DC_DATE, 'yyyy'), 'YYYY') YYEAR          -- "2026"
+  FROM BO.V_DRA_DAILY_CUSTOMERS_SELECT D
+ WHERE DC_DATE >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -5)
+   AND DC_DATE < TRUNC(SYSDATE)
+ GROUP BY TRUNC(DC_DATE, 'MM'),                         -- "2026-04-01 00:00:00.0"      
+          BO.GET_WEEK_NUM(DC_DATE),                     -- "W3"
+          BO.GET_SAME_DAY(DC_DATE),                     -- "2026-08-15 00:00:00.0"
+          TO_CHAR(DC_DATE, 'DY'),                       -- "SAT"                        -- SAT
+          BO.GET_DATE_MTD(DC_DATE),                     -- "PM1TD"                      -- PM1TD
+          D.DC_DATE,                                    -- "2026-04-18 00:00:00.0"      --
+          D.EVENT_DESCRIPTION,                          -- "30 Days Smartphone Users"   --
+          D.DC_PROVINCE,                                -- "Manica"                     -- Manica
+          D.DC_SEGMENT;                                 -- "HIGH"                       -- HIGH
+
+
+----------------- Agrupamento ----------------------
+
+No final das contas agrupo DC_PROVINCE
+
+DC_DATE +
+EVENT_DESCRIPTION +
+DC_PROVINCE +
+DC_SEGMENT
+
+{
+  "DC_DATE" : "2026-03-01 00:00:00.0",
+  "EVENT_DESCRIPTION" : "30 Days Voice Users SUBID",
+  "DC_PROVINCE" : "Manica",
+  "DC_SEGMENT" : "Vanduzi",
+
+
+  "DC_PREPAD" : "22272",
+  "DC_HYBRID" : "112",
+  "DC_TOTAL" : "22388"
+}
+
+
+
+
+
+
+BO.V_DRA_DAILY_CUSTOMERS_SELECT
+BO.V_DRA_DAILY_REVENUE_SELECT_VW
+BO.VW_DDR_DRLL_DOWN_RECHARGE
+BO.VW_MPESA_VIEW

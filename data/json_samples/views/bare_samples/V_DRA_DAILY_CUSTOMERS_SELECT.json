@@ -1,0 +1,56 @@
+[
+  {
+    "DC_DATE": "2026-03-01 00:00:00.0",
+    "EVENT_DESCRIPTION": "30 Days Voice Users SUBID",
+    "DC_PREPAD": "22272",
+    "DC_HYBRID": "112",
+    "DC_TOTAL": "22388",
+    "DC_PROVINCE": "Manica",
+    "DC_SEGMENT": "Vanduzi"
+  },
+  {
+    "DC_DATE": "2026-03-02 00:00:00.0",
+    "EVENT_DESCRIPTION": "Total Revenue Users",
+    "DC_PREPAD": "25565",
+    "DC_HYBRID": "121",
+    "DC_TOTAL": "25686",
+    "DC_PROVINCE": "Inhambane",
+    "DC_SEGMENT": "AHVC"
+  },
+  {
+    "DC_DATE": "2026-03-04 00:00:00.0",
+    "EVENT_DESCRIPTION": "MTD Active GSM",
+    "DC_PREPAD": "5829",
+    "DC_HYBRID": "1",
+    "DC_TOTAL": "5830",
+    "DC_PROVINCE": "Gaza",
+    "DC_SEGMENT": null
+  },
+  {
+    "DC_DATE": "2026-03-06 00:00:00.0",
+    "EVENT_DESCRIPTION": "Data Users",
+    "DC_PREPAD": "4039",
+    "DC_HYBRID": "28",
+    "DC_TOTAL": "4082",
+    "DC_PROVINCE": "Maputo Cidade",
+    "DC_SEGMENT": null
+  },
+  {
+    "DC_DATE": "2026-03-07 00:00:00.0",
+    "EVENT_DESCRIPTION": "30 Days Active Base",
+    "DC_PREPAD": "908",
+    "DC_HYBRID": "67",
+    "DC_TOTAL": "975",
+    "DC_PROVINCE": "Niassa",
+    "DC_SEGMENT": "HVC"
+  },
+  {
+    "DC_DATE": "2026-03-06 00:00:00.0",
+    "EVENT_DESCRIPTION": "30 Days Active SUBID",
+    "DC_PREPAD": "210647",
+    "DC_HYBRID": "4260",
+    "DC_TOTAL": "215597",
+    "DC_PROVINCE": "Maputo Cidade",
+    "DC_SEGMENT": "Distrito Urbano De Kamavota"
+  }
+]
