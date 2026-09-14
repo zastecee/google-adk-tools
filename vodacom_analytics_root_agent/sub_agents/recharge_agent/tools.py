@@ -1,7 +1,10 @@
 import csv
+import json
 import os
 from datetime import UTC, datetime
 from typing import Literal
+
+from dateutil.relativedelta import relativedelta
 
 # Load the recharge dataset from a CSV file
 _dir = os.path.dirname(os.path.abspath(__file__))
@@ -558,3 +561,126 @@ def get_previous_year_same_day(target_date: str) -> str:
     raise ValueError(
       f"Data inválida '{target_date}'. O formato esperado é 'DD-MMM-YY' (ex: '22-OCT-25')."
     ) from e
+
+
+if __name__ == "__main__":
+  # kpi = "So-Prati"
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_recharge_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # kpi = "So-Prati"
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # kpi = "So-Prati"
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_recharge_month_on_month_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # kpi = "So-Prati"
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_recharge_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_total_mpesa_recharge_per_day
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_mpesa_recharge_per_day(target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # get_grouped_recharge_month_to_date_total
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_month_to_date_total(
+  #     target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_grouped_recharge_month_on_month_metrics
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_month_on_month_metrics(
+  #     target_date, group="mpesa", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_grouped_recharge_year_on_year_metrics
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_year_on_year_metrics(
+  #     target_date, group="mpesa", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_total_other_recharge_per_day
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_other_recharge_per_day(target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # -----------------
+
+  # # get_grouped_recharge_month_to_date_total
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_month_to_date_total(
+  #     target_date, group="other", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_grouped_recharge_month_on_month_metrics
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_month_on_month_metrics(
+  #     target_date, group="other", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_grouped_recharge_year_on_year_metrics
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_year_on_year_metrics(
+  #     target_date, group="other", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # ---------------------------------------------------
+  # # get_total_recharge_per_day_all_kpis
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_recharge_per_day_all_kpis(target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # get_grouped_recharge_month_to_date_total
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_month_to_date_total(
+  #     target_date, group="all", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_grouped_recharge_month_on_month_metrics
+  # target_date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_grouped_recharge_month_on_month_metrics(
+  #     target_date, group="all", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # get_grouped_recharge_year_on_year_metrics
+  target_date = "10-SEP-26"
+  for billing_type in ["prepaid", "hybrid", "total"]:
+    result = get_grouped_recharge_year_on_year_metrics(
+      target_date, group="all", billing_type=billing_type
+    )
+    print(json.dumps(result, indent=2))

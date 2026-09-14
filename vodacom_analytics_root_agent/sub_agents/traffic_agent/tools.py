@@ -1,4 +1,5 @@
 import csv
+import json
 import os
 from datetime import UTC, datetime
 from typing import Literal
@@ -29,23 +30,23 @@ BillingType = Literal["prepaid", "hybrid", "total"]
 
 
 KPIType = Literal[
-  "Voice Traffic - Billed",
-  "Voice Traffic - Free",
-  "Voice Traffic - OOB",
-  "Data Traffic - Billed",
-  "Data Traffic - Free",
-  "Data Traffic - OOB",
-  "Sms Traffic - Billed",
-  "Sms Traffic - Free",
-  "Sms Traffic - OOB",
-  "M-Pesa Paybill",
+  "Voice Traffic - Billed",  # NOT correct
+  "Voice Traffic - Free",  # NOT correct
+  "Voice Traffic - OOB",  # NOT correct
+  "Data Traffic - Billed",  # NOT correct
+  "Data Traffic - Free",  # NOT correct
+  "Data Traffic - OOB",  # NOT correct
+  "Sms Traffic - Billed",  # NOT correct
+  "Sms Traffic - Free",  # NOT correct
+  "Sms Traffic - OOB",  # NOT correct
+  "M-Pesa Paybill",  # NOT exist
   "M-Pesa P2P",
   "M-Pesa Withdrawal",
   "M-Pesa Others",
-  "Interconnect Local - Movitel",
-  "Interconnect Local - mCel",
-  "Interconnect Local - TDM",
-  "Interconnect International",
+  "Interconnect Local - Movitel",  # NOT correct
+  "Interconnect Local - mCel",  # NOT correct
+  "Interconnect Local - TDM",  # NOT correct
+  "Interconnect International",  # NOT correct
   "Inflows",
   "Outflows",
 ]
@@ -261,3 +262,214 @@ def get_previous_year_same_day(target_date: str) -> str:
     raise ValueError(
       f"Data inválida '{target_date}'. O formato esperado é 'DD-MMM-YY' (ex: '22-OCT-25')."
     ) from e
+
+
+if __name__ == "__main__":
+  # kpi = "Voice Traffic - Billed"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Voice Traffic - Free
+  # kpi = "Voice Traffic - Free"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Voice Traffic - OOB
+  # kpi = "Voice Traffic - OOB"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Data Traffic - Billed
+  # kpi = "Data Traffic - Billed"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Data Traffic - Free
+  # kpi = "Data Traffic - Free"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Data Traffic - OOB
+  # kpi = "Data Traffic - OOB"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Sms Traffic - Billed
+  # kpi = "Sms Traffic - Billed"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Sms Traffic - OOB
+  # kpi = "Sms Traffic - OOB"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # M-Pesa Paybill
+  # kpi = "M-Pesa Paybill"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # M-Pesa P2P
+  # kpi = "M-Pesa P2P"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # M-Pesa Withdrawal
+  # kpi = "M-Pesa Withdrawal"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # M-Pesa Others
+  # kpi = "M-Pesa Others"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Interconnect Local - Movitel
+  # kpi = "Interconnect Local - Movitel"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Interconnect Local - mCel
+  # kpi = "Interconnect Local - mCel"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Interconnect Local - TDM
+  # kpi = "Interconnect Local - TDM"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Interconnect International
+  # kpi = "Interconnect International"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Inflows
+  # kpi = "Inflows"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Outflows
+  # kpi = "Outflows"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # ------------------------------------------------------
+  # MTD
+  # kpi = "Voice Traffic - Billed"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # kpi = "Voice Traffic - Free"
+  # kpi = "Voice Traffic - Free"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Voice Traffic - OOB
+  # kpi = "Voice Traffic - OOB"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # Data Traffic - Billed -> Falta este para baixo
+
+  # ------------------------------------------------------
+  # # MoM
+  # kpi = "Voice Traffic - Billed"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_traffic_month_on_month_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # kpi = "Voice Traffic - Free"
+  # kpi = "Voice Traffic - Free"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_traffic_month_on_month_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # Voice Traffic - OOB
+  # kpi = "Voice Traffic - OOB"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_traffic_month_on_month_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # Data Traffic - Billed -> Falta este para baixo
+
+  # ------------------------------------------------------
+  # # YoY
+  # kpi = "Voice Traffic - Billed"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_traffic_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # # kpi = "Voice Traffic - Free"
+  # kpi = "Voice Traffic - Free"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_traffic_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # Voice Traffic - OOB
+  kpi = "Voice Traffic - OOB"
+  target_date = "14-AUG-26"
+  for billing_type in ["prepaid", "hybrid", "total"]:
+    result = get_traffic_year_on_year_metrics(
+      kpi, target_date, billing_type=billing_type
+    )
+    print(json.dumps(result, indent=2))
+
+  # # Data Traffic - Billed -> Falta este para baixo

@@ -1,4 +1,5 @@
 import csv
+import json
 import os
 from datetime import UTC, datetime
 from typing import Literal
@@ -317,3 +318,11 @@ def get_customers_year_on_year_metrics(
     return {
       "error": (f"get_customers_year_on_year_metrics failed due to invalid data: {e}")
     }
+
+
+if __name__ == "__main__":
+  kpi = "Active GSM"
+  target_date = "30-AUG-26"
+  for billing_type in ["prepaid", "hybrid", "total"]:
+    result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
+    print(json.dumps(result, indent=2))

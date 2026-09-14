@@ -57,22 +57,12 @@ KPI_LIST = [
   "Airtime Advance",
   "Others",
   "Interconnect",
-  # "Device Finance - Repayment",
   "Core",
   "Payments",
   "Financial Services",
   "Others - M-Pesa",
-  "CBU Postpaid",
-  "VB",
-]
-
-
-CBU_KPI_LIST = [
-  "Voice",
-  "Data",
-  "Sms",
-  "Airtime Advance",
-  "Others",
+  # "CBU Postpaid",  # only for mtd
+  # "VB",  # only for mtd
 ]
 
 
@@ -81,7 +71,7 @@ MPESA_KPI_LIST = [
   "Payments",
   "Financial Services",
   "Others - M-Pesa",
-]
+]  ##
 
 
 CBU_KPI_LIST_INCLUDING_INTERCONNECT = [
@@ -91,12 +81,21 @@ CBU_KPI_LIST_INCLUDING_INTERCONNECT = [
   "Airtime Advance",
   "Others",
   "Interconnect",
-]
+]  ##
 
 POSTPAID_VB_KPIS = {
   "CBU Postpaid",
   "VB",
-}
+}  ##
+
+
+CBU_KPI_LIST = [
+  "Voice",
+  "Data",
+  "Sms",
+  "Airtime Advance",
+  "Others",
+]
 
 
 BillingType = Literal["prepaid", "hybrid", "total"]
@@ -688,13 +687,92 @@ def generate_dashboard(
   }
 
 
+# # Function to get total M-Pesa revenue per day for a specific date
+# def get_total_service_revenue_per_day(
+#   date: str, billing_type: BillingType = "prepaid"
+# ) -> dict:
+#   """
+#   Calculates the total daily M-Pesa revenue for a given date.
+
+#     Args:
+#         date: The target date in 'DD-MMM-YY' uppercase format (e.g., '22-OCT-25').
+#         billing_type: The customer billing segment ('prepaid', 'hybrid', 'total').
+#           Defaults to 'prepaid'.
+#     Returns:
+#         dict: A dictionary containing target date, billing type, and total service revenue.
+#   """
+
+#   try:
+#     target_column = REVENUE_BILLING_MAP.get(billing_type.lower(), billing_type)
+
+#     total_service_revenue = sum(
+#       float(item[target_column])
+#       for item in records
+#       if item.get("SERVICE_NAME") in KPI_LIST and item.get("OC_DATE") == date
+#     )
+
+#     return {
+#       "date": date,
+#       "billing_type": billing_type,
+#       "total_service_revenue": f"{round(total_service_revenue):,}",
+#     }
+#   except (KeyError, ValueError, TypeError, AttributeError) as e:
+#     return {"error": f"get_total_service_revenue_per_day failed: {e}"}
+
+
 if __name__ == "__main__":
+  # kpi = "Data"
+  # date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_revenue_per_day(kpi, date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # kpi = "Data"
+  # date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # kpi = "Data"
+  # date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_revenue_month_on_month_metrics(kpi, date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # kpi = "VB"
+  # date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_revenue_year_on_year_metrics(kpi, date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_cbu_prepaid_revenue_month_on_month_metrics(
+  #     date, billing_type=billing_type, include_interconnect=False
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_cbu_prepaid_revenue_year_on_year_metrics(
+  #     date, billing_type=billing_type, include_interconnect=False
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # ------------------------------------------------------------------------------
+
   # # Test case for total revenue per day
-  kpi = "VB"  # VB
-  date = "08-SEP-26"
+  # kpi = "VB"  # VB
+  date = "10-SEP-26"
   for billing_type in ["prepaid", "hybrid", "total"]:
-    result = get_total_revenue_per_day(kpi, date, billing_type=billing_type)
+    result = get_total_service_revenue_per_day(date, billing_type=billing_type)
     print(json.dumps(result, indent=2))
+
+  # # Test case for month-to-date total service revenue
+  # date = "04-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_service_revenue_month_to_date_total(date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
 
   # kpi = "CBU Postpaid"  # CBU Postpaid
   # date = "06-AUG-26"
@@ -713,15 +791,15 @@ if __name__ == "__main__":
   #   result = get_total_service_revenue_per_day(date, billing_type=billing_type)
   #   print(json.dumps(result, indent=2))
 
-  # # get_kpi_month_to_date_total
-  # kpi = "VB"  # VB
-  # date = "06-AUG-26"
+  # # # get_kpi_month_to_date_total
+  # kpi = "Voice"  # Voice
+  # date = "07-SEP-26"
   # for billing_type in ["prepaid", "hybrid", "total"]:
   #   result = get_kpi_month_to_date_total(kpi, date, billing_type=billing_type)
   #   print(json.dumps(result, indent=2))
 
   # kpi = "Voice"  # Voice
-  # date = "04-AUG-26"
+  # date = "10-SEP-26"
   # for billing_type in ["prepaid", "hybrid", "total"]:
   #   result = get_revenue_month_on_month_metrics(kpi, date, billing_type=billing_type)
   #   print(json.dumps(result, indent=2))
@@ -730,4 +808,18 @@ if __name__ == "__main__":
   # date = "04-AUG-26"
   # for billing_type in ["prepaid", "hybrid", "total"]:
   #   result = get_revenue_year_on_year_metrics(kpi, date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_cbu_prepaid_revenue_per_day(
+  #     date="10-SEP-26", billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_mpesa_revenue_per_day(date="10-SEP-26", billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_cbu_prepaid_month_to_date_total("10-SEP-26", billing_type=billing_type)
   #   print(json.dumps(result, indent=2))
