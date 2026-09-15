@@ -265,11 +265,11 @@ def get_previous_year_same_day(target_date: str) -> str:
 
 
 if __name__ == "__main__":
-  # kpi = "Voice Traffic - Billed"
-  # target_date = "14-AUG-26"
-  # for billing_type in ["prepaid", "hybrid", "total"]:
-  #   result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
-  #   print(json.dumps(result, indent=2))
+  kpi = "Voice Traffic - Billed"
+  target_date = "14-AUG-26"
+  for billing_type in ["prepaid", "hybrid", "total"]:
+    result = get_total_traffic_per_day(kpi, target_date, billing_type=billing_type)
+    print(json.dumps(result, indent=2))
 
   # # Voice Traffic - Free
   # kpi = "Voice Traffic - Free"
@@ -464,12 +464,12 @@ if __name__ == "__main__":
   #   print(json.dumps(result, indent=2))
 
   # Voice Traffic - OOB
-  kpi = "Voice Traffic - OOB"
-  target_date = "14-AUG-26"
-  for billing_type in ["prepaid", "hybrid", "total"]:
-    result = get_traffic_year_on_year_metrics(
-      kpi, target_date, billing_type=billing_type
-    )
-    print(json.dumps(result, indent=2))
+  # kpi = "Voice Traffic - OOB"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_traffic_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
 
   # # Data Traffic - Billed -> Falta este para baixo

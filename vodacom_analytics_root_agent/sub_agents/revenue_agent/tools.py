@@ -65,6 +65,21 @@ KPI_LIST = [
   # "VB",  # only for mtd
 ]
 
+KPI_LIST_TOTAL_MTD_MOM_YOY = [
+  "Voice",
+  "Data",
+  "Sms",
+  "Airtime Advance",
+  "Others",
+  "Interconnect",
+  "Core",
+  "Payments",
+  "Financial Services",
+  "Others - M-Pesa",
+  "CBU Postpaid",
+  "VB",
+]
+
 
 MPESA_KPI_LIST = [
   "Core",
@@ -590,6 +605,71 @@ def get_cbu_prepaid_revenue_year_on_year_metrics(
     }
 
 
+# KPI_LIST_TOTAL_MTD_MOM_YOY
+
+
+# Function to get month-to-date total CBU prepaid revenue for a specific date
+def get_total_service_revenue_month_to_date_total(
+  target_date: str,
+  billing_type: BillingType = "prepaid",
+) -> dict:
+  """Calculates the Month-To-Date (MTD) cumulative total service revenue.
+
+  Args:
+      target_date: The end date for the MTD accumulation in 'DD-MMM-YY' format (e.g., '22-OCT-25').
+      billing_type: The customer billing segment ('prepaid', 'hybrid', 'total').
+        Defaults to 'prepaid'.
+      include_interconnect: Whether to include 'Interconnect' in the aggregated service revenue total.
+        Defaults to False.
+
+  Returns:
+      dict: A dictionary containing target date, billing type, and the aggregated MTD service revenue total.
+  """
+  try:
+    target_column = REVENUE_BILLING_MAP.get(billing_type.lower(), billing_type)
+    target_column_2 = REVENUE_BILLING_MAP_EXCLUSIVE_FOR_VB_AND_CBU_POSTPAID.get(
+      billing_type.lower(), billing_type
+    )
+
+    parsed_dt = datetime.strptime(target_date, "%d-%b-%y").replace(tzinfo=UTC)
+    target_date_obj = parsed_dt.date()
+    month_start_date = target_date_obj.replace(day=1)
+    total_service_revenue_month_to_date_total = 0.0
+
+    kpi_list = KPI_LIST_TOTAL_MTD_MOM_YOY
+
+    for record in records:
+      if record["SERVICE_NAME"] not in kpi_list:
+        continue
+
+      record_date = (
+        datetime.strptime(record["OC_DATE"], "%d-%b-%y").replace(tzinfo=UTC).date()
+      )
+
+      if month_start_date <= record_date <= target_date_obj:
+        total_service_revenue_month_to_date_total += float(record.get(target_column))
+
+    for record in rev_postpaid_records:
+      if record["SERVICE_TYPE"] not in kpi_list:
+        continue
+
+      record_date = (
+        datetime.strptime(record["DAY_DT"], "%d-%b-%y").replace(tzinfo=UTC).date()
+      )
+
+      if month_start_date <= record_date <= target_date_obj:
+        total_service_revenue_month_to_date_total += float(record.get(target_column_2))
+
+    return {
+      "date": target_date,
+      "billing_type": billing_type,
+      "total_service_revenue_month_to_date_total": f"{round(total_service_revenue_month_to_date_total):,}",
+    }
+
+  except (KeyError, ValueError, TypeError, AttributeError) as e:
+    return {"error": f"get_cbu_prepaid_month_to_date_total failed: {e}"}
+
+
 # Function to get year-on-year metrics for a specific KPI and date
 def get_revenue_year_on_year_metrics(
   kpi: KPIType,
@@ -721,6 +801,18 @@ def generate_dashboard(
 
 
 if __name__ == "__main__":
+  # get_total_service_revenue_month_to_date_total
+  date = "14-AUG-26"
+  for billing_type in ["prepaid", "hybrid", "total"]:
+    result = get_total_service_revenue_month_to_date_total(
+      date, billing_type=billing_type
+    )
+    print(json.dumps(result, indent=2))
+
+  # source_data = rev_postpaid_records if is_postpaid_vb else records
+  # kpi_field = "SERVICE_TYPE" if is_postpaid_vb else "SERVICE_NAME"
+  # date_field = "DAY_DT" if is_postpaid_vb else "OC_DATE"
+
   # kpi = "Data"
   # date = "10-SEP-26"
   # for billing_type in ["prepaid", "hybrid", "total"]:
@@ -763,10 +855,10 @@ if __name__ == "__main__":
 
   # # Test case for total revenue per day
   # kpi = "VB"  # VB
-  date = "10-SEP-26"
-  for billing_type in ["prepaid", "hybrid", "total"]:
-    result = get_total_service_revenue_per_day(date, billing_type=billing_type)
-    print(json.dumps(result, indent=2))
+  # date = "10-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_service_revenue_per_day(date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
 
   # # Test case for month-to-date total service revenue
   # date = "04-SEP-26"

@@ -321,8 +321,102 @@ def get_customers_year_on_year_metrics(
 
 
 if __name__ == "__main__":
-  kpi = "Active GSM"
-  target_date = "30-AUG-26"
+  # kpi = "Active GSM"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Voice Users
+  # kpi = "Voice Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Data Users
+  # kpi = "Data Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Sms Users
+  # kpi = "Sms Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # Active Mpesa base -> Falta este para baixo
+
+  # --------------------------------------------------------------
+  # MoM
+  # kpi = "Active GSM"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Voice Users
+  # kpi = "Voice Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Data Users
+  # kpi = "Data Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # # Sms Users
+  # kpi = "Sms Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_kpi_month_to_date_total(kpi, target_date, billing_type=billing_type)
+  #   print(json.dumps(result, indent=2))
+
+  # Active Mpesa base -> Falta este para baixo
+
+  # --------------------------------------------------------------
+  # YoY
+  # # Active GSM
+  # kpi = "Active GSM"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_customers_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # Voice Users
+  # kpi = "Voice Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_customers_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # Data Users
+  # kpi = "Data Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_customers_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # Sms Users
+  kpi = "Sms Users"
+  target_date = "14-AUG-26"
   for billing_type in ["prepaid", "hybrid", "total"]:
-    result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
+    result = get_customers_year_on_year_metrics(
+      kpi, target_date, billing_type=billing_type
+    )
     print(json.dumps(result, indent=2))
+
+  # Active Mpesa base -> Falta este para baixo
