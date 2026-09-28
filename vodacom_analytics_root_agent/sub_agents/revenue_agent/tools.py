@@ -50,6 +50,22 @@ REVENUE_BILLING_MAP_EXCLUSIVE_FOR_VB_AND_CBU_POSTPAID = {
 }
 
 
+list_def = [
+  "Voice",
+  "Data",
+  "Sms",
+  "Airtime Advance",
+  "Others",
+  "Interconnect",
+  "Core",
+  "Payments",
+  "Financial Services",
+  "Others - M-Pesa",
+  "VB",
+  "CBU Postpaid",
+]
+
+
 KPI_LIST = [
   "Voice",
   "Data",
@@ -61,8 +77,8 @@ KPI_LIST = [
   "Payments",
   "Financial Services",
   "Others - M-Pesa",
-  # "CBU Postpaid",  # only for mtd
-  # "VB",  # only for mtd
+  "CBU Postpaid",  # only for mtd
+  "VB",  # only for mtd
 ]
 
 KPI_LIST_TOTAL_MTD_MOM_YOY = [
@@ -286,7 +302,7 @@ def get_mpesa_revenue_per_day(date: str, billing_type: BillingType = "prepaid") 
 
 
 # Function to get total service revenue per day for a specific date
-def get_total_service_revenue_per_day(
+def get_total_service_revenue_per_day___________________(
   date: str,
   billing_type: BillingType = "prepaid",
 ) -> dict:
@@ -306,13 +322,41 @@ def get_total_service_revenue_per_day(
     total_service = sum(
       float(item[target_column])
       for item in records
-      if item.get("SERVICE_NAME") in KPI_LIST and item.get("OC_DATE") == date
+      if item.get("SERVICE_NAME")
+      in [
+        "Voice",
+        "Data",
+        "Sms",
+        "Airtime Advance",
+        "Others",
+        "Interconnect",
+        "Core",
+        "Payments",
+        "Financial Services",
+        "Others - M-Pesa",
+      ]
+      and item.get("OC_DATE") == date
+    )
+
+    target_column_2 = REVENUE_BILLING_MAP_EXCLUSIVE_FOR_VB_AND_CBU_POSTPAID.get(
+      billing_type.lower(), billing_type
+    )
+
+    total_service_2 = sum(
+      float(item[target_column_2])
+      for item in rev_postpaid_records
+      if item.get("SERVICE_TYPE")
+      in [
+        "CBU Postpaid",
+        "VB",
+      ]
+      and item.get("DAY_DT") == date
     )
 
     return {
       "date": date,
       "billing_type": billing_type,
-      "total_service": f"{round(total_service):,}",
+      "total_service": f"{round(total_service + total_service_2):,}",
     }
   except (KeyError, ValueError, TypeError, AttributeError) as e:
     return {"error": f"get_total_service_revenue_per_day failed: {e}"}
@@ -605,9 +649,6 @@ def get_cbu_prepaid_revenue_year_on_year_metrics(
     }
 
 
-# KPI_LIST_TOTAL_MTD_MOM_YOY
-
-
 # Function to get month-to-date total CBU prepaid revenue for a specific date
 def get_total_service_revenue_month_to_date_total(
   target_date: str,
@@ -667,7 +708,124 @@ def get_total_service_revenue_month_to_date_total(
     }
 
   except (KeyError, ValueError, TypeError, AttributeError) as e:
-    return {"error": f"get_cbu_prepaid_month_to_date_total failed: {e}"}
+    return {"error": f"get_total_service_revenue_month_to_date_total failed: {e}"}
+
+
+# Function to get month-on-month metrics for total service revenue
+def get_total_service_revenue_month_on_month_metrics(
+  date: str,
+  billing_type: BillingType = "prepaid",
+) -> dict:
+  """Compares Month-To-Date (MTD) total service revenue between the target date and the same day of the previous month (MoM).
+
+  Args:
+      date: The evaluation date in 'DD-MMM-YY' format (e.g., '22-OCT-25').
+      billing_type: Customer billing segment ('prepaid', 'hybrid', 'total').
+        Defaults to 'prepaid'.
+      include_interconnect: Whether to include Interconnect revenue in the comparison.
+        Defaults to False.
+
+  Returns:
+      dict: Comparison results containing current MTD total, previous month MTD total,
+            absolute difference, and percentage change.
+  """
+  try:
+    previous_month_date = get_previous_month_same_day(date)
+
+    current_data = get_total_service_revenue_month_to_date_total(
+      date,
+      billing_type,
+    )
+    previous_data = get_total_service_revenue_month_to_date_total(
+      previous_month_date,
+      billing_type,
+    )
+
+    current_month_total = float(
+      current_data.get("total_service_revenue_month_to_date_total", 0).replace(",", "")
+    )
+    previous_month_total = float(
+      previous_data.get("total_service_revenue_month_to_date_total", 0).replace(",", "")
+    )
+
+    difference = current_month_total - previous_month_total
+
+    percentage_change = (
+      (difference / previous_month_total) * 100 if previous_month_total != 0 else None
+    )
+
+    return {
+      "date": date,
+      "previous_month_date": previous_month_date,
+      "billing_type": billing_type,
+      "current_month_total": f"{round(current_month_total):,}",
+      "previous_month_total": f"{round(previous_month_total):,}",
+      "difference": f"{round(difference):,}",
+      "percentage_change": (
+        round(percentage_change, 1) if percentage_change is not None else None
+      ),
+    }
+
+  except ValueError as e:
+    return {
+      "error": f"get_total_service_revenue_month_on_month_metrics failed due to invalid date: {e}"
+    }
+
+
+# Function to get year-on-year metrics for CBU prepaid revenue
+def get_total_service_revenue_year_on_year_metrics(
+  date: str,
+  billing_type: BillingType = "prepaid",
+) -> dict:
+  """Compares Month-To-Date (MTD) CBU revenue between the target date and the same day of the previous year (YoY).
+
+  Args:
+      date: The evaluation date in 'DD-MMM-YY' format (e.g., '22-OCT-25').
+      billing_type: Customer billing segment ('prepaid', 'hybrid', 'total').
+        Defaults to 'prepaid'.
+      include_interconnect: Whether to include Interconnect revenue in the comparison.
+        Defaults to False.
+
+  Returns:
+      dict: Comparison results containing current year MTD total, previous year MTD total,
+            absolute difference, and percentage change.
+  """
+  try:
+    previous_year_date = get_previous_year_same_day(date)
+
+    current_data = get_total_service_revenue_month_to_date_total(date, billing_type)
+    previous_data = get_total_service_revenue_month_to_date_total(
+      previous_year_date, billing_type
+    )
+
+    current_year_total = float(
+      current_data.get("total_service_revenue_month_to_date_total", 0).replace(",", "")
+    )
+    previous_year_total = float(
+      previous_data.get("total_service_revenue_month_to_date_total", 0).replace(",", "")
+    )
+
+    difference = current_year_total - previous_year_total
+    percentage_change = (
+      (difference / previous_year_total) * 100 if previous_year_total != 0 else None
+    )
+
+    return {
+      "date": date,
+      "previous_year_date": previous_year_date,
+      "billing_type": billing_type,
+      "current_year_total": f"{round(current_year_total):,}",
+      "previous_year_total": f"{round(previous_year_total):,}",
+      "difference": f"{round(difference):,}",
+      "percentage_change": (
+        round(percentage_change, 1) if percentage_change is not None else None
+      ),
+    }
+
+  except ValueError as e:
+    return {
+      "error": f"get_total_service_revenue_year_on_year_metrics failed due to invalid date: {e}"
+    }
 
 
 # Function to get year-on-year metrics for a specific KPI and date
@@ -802,9 +960,39 @@ def generate_dashboard(
 
 if __name__ == "__main__":
   # get_total_service_revenue_month_to_date_total
-  date = "14-AUG-26"
+  # date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_service_revenue_month_to_date_total(
+  #     date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # date = "08-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_service_revenue_per_day___________________(
+  #     date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # # get_total_service_revenue_month_to_date_total
+  # date = "14-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_service_revenue_month_to_date_total(
+  #     date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # date = "14-SEP-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_total_service_revenue_month_on_month_metrics(
+  #     date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
+
+  # get_total_service_revenue_year_on_year_metrics
+  date = "14-SEP-26"
   for billing_type in ["prepaid", "hybrid", "total"]:
-    result = get_total_service_revenue_month_to_date_total(
+    result = get_total_service_revenue_year_on_year_metrics(
       date, billing_type=billing_type
     )
     print(json.dumps(result, indent=2))

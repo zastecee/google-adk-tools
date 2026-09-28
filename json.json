@@ -1,0 +1,39 @@
+{
+  "subscriber": {
+    "msisdn": "258842520280"
+  },
+  "statement_period": {
+    "start_date": "2026-09-15",
+    "end_date": "2026-09-17"
+  },
+  "services": [
+    {
+      "service_type": "DATA",
+      "transactions": [
+        {
+          "event_date": "2026-09-17",
+          "offer": "SDC3_83149MB30D",
+          "country": "Mozambique",
+          "usage_mb": 30,
+          "balance_before_mb": 10020,
+          "balance_after_mb": 9990,
+          "expiry_date": "2026-10-01"
+        },
+        {
+          "event_date": "2026-09-17",
+          "offer": "SDC3_83149MB30D",
+          "country": "Mozambique",
+          "usage_mb": 29,
+          "balance_before_mb": 10079,
+          "balance_after_mb": 10050,
+          "expiry_date": "2026-10-01"
+        }
+      ]
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "page_size": 100,
+    "total_records": 125
+  }
+}

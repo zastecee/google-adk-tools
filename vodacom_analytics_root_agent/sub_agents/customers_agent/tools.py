@@ -321,11 +321,11 @@ def get_customers_year_on_year_metrics(
 
 
 if __name__ == "__main__":
-  # kpi = "Active GSM"
-  # target_date = "14-AUG-26"
-  # for billing_type in ["prepaid", "hybrid", "total"]:
-  #   result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
-  #   print(json.dumps(result, indent=2))
+  kpi = "Active GSM"
+  target_date = "22-SEP-26"
+  for billing_type in ["prepaid", "hybrid", "total"]:
+    result = get_total_customers_per_day(kpi, target_date, billing_type=billing_type)
+    print(json.dumps(result, indent=2))
 
   # # Voice Users
   # kpi = "Voice Users"
@@ -410,13 +410,13 @@ if __name__ == "__main__":
   #   )
   #   print(json.dumps(result, indent=2))
 
-  # Sms Users
-  kpi = "Sms Users"
-  target_date = "14-AUG-26"
-  for billing_type in ["prepaid", "hybrid", "total"]:
-    result = get_customers_year_on_year_metrics(
-      kpi, target_date, billing_type=billing_type
-    )
-    print(json.dumps(result, indent=2))
+  # # Sms Users
+  # kpi = "Sms Users"
+  # target_date = "14-AUG-26"
+  # for billing_type in ["prepaid", "hybrid", "total"]:
+  #   result = get_customers_year_on_year_metrics(
+  #     kpi, target_date, billing_type=billing_type
+  #   )
+  #   print(json.dumps(result, indent=2))
 
   # Active Mpesa base -> Falta este para baixo
