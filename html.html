@@ -1,0 +1,249 @@
+<worker impl="FileReadWrite">
+
+  <reader impl="DatabaseReader" sql="
+
+ WITH PARAMS AS (SELECT FI_ID, FI_EARLIEST_DATE, FI_LATEST_DATE FROM INSIGHT.F_FI_FILE WHERE FI_ID = ?)
+	SELECT
+	F_FI_ID_ORIG, CC_RECORD_TYPE, CC_OFFER_ID, CC_GROUP_ID, CC_SUBSCRIPTION_ID, CC_MSISDN, CC_IMSI, CC_SUBSCRIBER_ID, CC_SUBSCRIBER_TYPE, 
+	CC_CHARGE_TYPE, CC_RECORD_OPENING_TIME, CC_RECORD_CLOSING_TIME, CC_SESSION_ID, CC_GGSN_CHARGING_ID, CC_APN, CC_RATING_GROUP, 
+	CC_SERVICE_ID, CC_RAT_TYPE, GSM_CELL_CODE, SITE_ID_A, CC_IS_ROAMING, CC_ZONE, CC_DURATION, CC_USED_VOLUME, 
+	CC_DOWNLOAD_VOLUME, CC_UPLOAD_VOLUME, CC_TERMINATION_CAUSE, CC_COUNTER_FINAL_VALUE, CC_RATED_VALUE_PRE_TAX, CC_RATED_VALUE_POST_TAX, CC_USER_EQUIPMENT_INFO_TYPE, CC_IMEI, 	
+	CC_BALANCE_IMPACT_NAME, CC_REQUEST_NUMBER, CC_OTHER_PARTY_ADDRESS, CC_ZONE_CALLED, CC_SERVICE_UNITS, CC_REQUEST_TYPE, CC_OFFER_NAME, 
+	CC_RESULT_CODE, CC_VLR_ID, CC_GL_ID, CC_CARRIER_ID, CC_ROAMING_COUNTRY, CC_ACCUMULATED_IN_BUNDLE, CC_ACCUMULATED_OUT_BUNDLE, CC_ACCUMULATED_NOT_APPLIED, 
+	CC_ACCUMULATED_USAGE_BALANCE, CC_ACCUMULATED_CHARGE_BALANCE, CC_CHARGED_AMOUNT, CC_EVENT_ID, CC_RATING_INDICATOR, CC_TIME_ZONE, CC_RERATE_AUDIT_TIME, CC_DUP, 
+	CC_PROVIDER_ID, CC_EXPIRY_DATE,	CC_UNIT_TYPE, CC_BALANCE_BEFORE, CC_MCCMNC, CC_CONSOLIDATED_CHARGE
+ FROM
+	(
+	  SELECT
+		F_FI_ID			AS			F_FI_ID_ORIG,
+		case
+		WHEN CC_RECORD_TYPE = 'VOICE'  and CC_DIRECTION_TYPE is null then CC_RECORD_TYPE
+		WHEN CC_RECORD_TYPE = 'VOICE'  and CC_DIRECTION_TYPE is not null then CC_RECORD_TYPE ||' '|| CC_DIRECTION_TYPE 
+		WHEN CC_RECORD_TYPE = 'SMS'  and CC_DIRECTION_TYPE is null then CC_RECORD_TYPE
+		WHEN CC_RECORD_TYPE = 'SMS'  and CC_DIRECTION_TYPE is not null then CC_RECORD_TYPE ||' '|| CC_DIRECTION_TYPE 
+		ELSE CC_RECORD_TYPE 
+		END AS CC_RECORD_TYPE,
+		CC_OFFER_ID,
+		CC_GROUP_ID,
+		CC_SUBSCRIPTION_ID,
+		CC_MSISDN,
+		CC_IMSI,
+		CC_SUBSCRIBER_ID,
+		CC_SUBSCRIBER_TYPE,
+		CC_CHARGE_TYPE,
+		CC_RECORD_OPENING_TIME,
+		CC_RECORD_CLOSING_TIME,
+		CC_SESSION_ID,
+		CC_GGSN_CHARGING_ID,
+		CC_APN,
+		CC_RATING_GROUP,
+		CC_SERVICE_ID,
+		CC_RAT_TYPE,
+		SUBSTR(CC_MCCMNC, 0, 3) || '-' || SUBSTR(CC_MCCMNC, 4, 4) || '-' ||
+		TO_NUMBER(LPAD(CC_USER_LOCATION_INFORMATION, 4), 'XXXXXXXX') || '-' ||
+		(case
+		WHEN CC_RAT_TYPE = 'EUTRA' THEN
+		ROUND(TO_NUMBER(TO_NUMBER(SUBSTR(CC_USER_LOCATION_INFORMATION, INSTR(CC_USER_LOCATION_INFORMATION, '_') + 1), 'XXXXXXXX')) / 256) 
+		||
+		ROUND(TO_NUMBER(SUBSTR(CC_USER_LOCATION_INFORMATION, INSTR(CC_USER_LOCATION_INFORMATION, '_') + 1), 'XXXXXXXX') -
+		(256 * ROUND(TO_NUMBER(TO_NUMBER(SUBSTR(CC_USER_LOCATION_INFORMATION, INSTR(CC_USER_LOCATION_INFORMATION,  '_') + 1), 'XXXXXXXX')) / 256)))
+		ELSE
+		TO_CHAR(TO_NUMBER(SUBSTR(CC_USER_LOCATION_INFORMATION, INSTR(CC_USER_LOCATION_INFORMATION, '_') + 1), 'XXXXXXXX'))
+		END) GSM_CELL_CODE ,
+		case WHEN CC_RAT_TYPE = 'EUTRA' THEN
+		TO_CHAR(ROUND(TO_NUMBER(TO_NUMBER(SUBSTR(CC_USER_LOCATION_INFORMATION, INSTR(CC_USER_LOCATION_INFORMATION, '_') + 1), 'XXXXXXXX')) / 256))
+		ELSE
+		LPAD(TO_NUMBER(SUBSTR(CC_USER_LOCATION_INFORMATION, INSTR(CC_USER_LOCATION_INFORMATION, '_') + 1), 'XXXXXXXX'), 4)
+		END SITE_ID_A,
+		case
+		WHEN CC_IS_ROAMING = 'true' THEN '1' 
+		WHEN CC_IS_ROAMING = 'false' THEN '0'
+                WHEN NVL(SUBSTR(CC_ZONE_CALLED,0, INSTR(CC_ZONE_CALLED, ';') - 1), CC_ZONE_CALLED) = 'MT_NATIONAL_OTHER' AND CC_IS_ROAMING = 'false' THEN '1'
+		WHEN CC_IS_ROAMING IS NULL THEN '###'
+			END AS CC_IS_ROAMING,
+		CC_ZONE,
+		CC_CC_TIME			AS		CC_DURATION,
+		CC_CC_TOTAL_OCTETS		AS		CC_USED_VOLUME,
+		CC_CC_INPUT_OCTETS		AS		CC_DOWNLOAD_VOLUME,
+		CC_CC_OUTPUT_OCTETS		AS		CC_UPLOAD_VOLUME,
+		CC_TERMINATION_CAUSE,
+		CC_COUNTER_FINAL_VALUE,
+		CC_RATED_VALUE_PRE_TAX,
+		CC_RATED_VALUE_POST_TAX,
+		CC_USER_EQUIPMENT_INFO_TYPE,
+		CC_USER_EQUIPMENT_INFO_VALUE		AS CC_IMEI, 
+		replace(REGEXP_SUBSTR (CC_BALANCE_IMPACT_NAME, '[^&amp;]+',1, 1),'Allowance', '') AS	 CC_BALANCE_IMPACT_NAME ,
+		CC_REQUEST_NUMBER,
+		CC_OTHER_PARTY_ADDRESS,
+		NVL(SUBSTR(CC_ZONE_CALLED,0, INSTR(CC_ZONE_CALLED, ';') - 1), CC_ZONE_CALLED) AS CC_ZONE_CALLED,
+		CC_CC_SERVICE_SPECIFIC_UNITS		AS CC_SERVICE_UNITS,
+		CC_REQUEST_TYPE,
+		CC_OFFER_NAME,
+		CC_RESULT_CODE,
+		CC_VLR_ID,
+		CC_GL_ID,
+		CC_CARRIER_ID,
+		CC_ROAMING_COUNTRY,
+		CC_ACCUMULATED_IN_BUNDLE,
+		CC_ACCUMULATED_OUT_BUNDLE,
+		CC_ACCUMULATED_NOT_APPLIED,
+		CC_ACCUMULATED_USAGE_BALANCE,
+		CC_ACCUMULATED_CHARGE_BALANCE,
+		CC_RATED_CASH_VALUE		AS		CC_CHARGED_AMOUNT,
+		CC_EVENT_ID,
+		CC_RATING_INDICATOR,
+		CC_TIME_ZONE,
+		CC_RERATE_AUDIT_TIME,
+		CC_DUP,
+		CC_PROVIDER_ID,
+		CC_EXPIRY_DATE,
+		CC_UNIT_TYPE,
+		CC_BALANCE_BEFORE,
+		CC_MCCMNC,
+		case WHEN CC_UNIT_TYPE IN ('CASH') THEN CC_RATED_CASH_VALUE
+			WHEN CC_UNIT_TYPE IN ('SECONDS') THEN CC_CC_TIME
+			WHEN CC_UNIT_TYPE IN ('EVENTS') THEN CC_CC_SERVICE_SPECIFIC_UNITS
+			WHEN CC_UNIT_TYPE IN ('BYTES') THEN CC_CC_TOTAL_OCTETS
+		END AS CC_CONSOLIDATED_CHARGE
+   FROM
+		ODS.STG_CC_CCS_CDR,
+        params
+   WHERE
+        F_FI_ID = FI_ID
+        AND CC_DUP = 'N'
+		)
+    " presql="" postsql="">
+
+    <field name="F_FI_ID_ORIG" impl="Long" len="10" />
+    <field name="CA_RECORD_TYPE" impl="String" len="35" />
+    <field name="CA_OFFER_ID" impl="String" len="20" />
+    <field name="CA_GROUP_ID" impl="String" len="64" />
+    <field name="CA_SUBSCRIPTION_ID" impl="String" len="36" />
+    <field name="CA_MSISDN" impl="String" len="15" />
+    <field name="CA_IMSI" impl="String" len="15" />
+    <field name="CA_SUBSCRIBER_ID" impl="String" len="36" />
+    <field name="CA_SUBSCRIBER_TYPE" impl="String" len="8" />
+    <field name="CA_CHARGE_TYPE" impl="String" len="20" />
+    <field name="CA_RECORD_OPENING_TIME" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_RECORD_CLOSING_TIME" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_SESSION_ID" impl="String" len="255" />
+    <field name="CA_GGSN_CHARGING_ID" impl="String" len="15" />
+    <field name="CA_APN" impl="String" len="40" />
+    <field name="CA_RATING_GROUP" impl="Long" len="22" />
+    <field name="CA_SERVICE_ID" impl="String" len="25" />
+    <field name="CA_RAT_TYPE" impl="String" len="5" />
+    <field name="GSM_CELL_CODE" impl="String" len="25" />
+    <field name="SITE_ID_A" impl="String" len="30" />
+    <field name="CA_IS_ROAMING" impl="String" len="5" />
+    <field name="CA_ZONE" impl="String" len="25" />
+    <field name="CA_DURATION" impl="Long" len="22" />
+    <field name="CA_USED_VOLUME" impl="Long" len="22" />
+    <field name="CA_DOWNLOAD_VOLUME" impl="Long" len="22" />
+    <field name="CA_UPLOAD_VOLUME" impl="Long" len="22" />
+    <field name="CA_TERMINATION_CAUSE" impl="Long" len="22" />
+    <field name="CA_COUNTER_FINAL_VALUE" impl="Double" len="22" />
+    <field name="CA_RATED_VALUE_PRE_TAX" impl="Long" len="22" />
+    <field name="CA_RATED_VALUE_POST_TAX" impl="Long" len="22" />
+    <field name="CA_USER_EQUIPMENT_INFO_TYPE" impl="String" len="14" />
+    <field name="CA_IMEI" impl="String" len="36" />
+    <field name="CA_BALANCE_IMPACT_NAME" impl="String" len="120" />
+    <field name="CA_REQUEST_NUMBER" impl="Long" len="22" />
+    <field name="CA_OTHER_PARTY_ADDRESS" impl="String" len="36" />
+    <field name="CA_ZONE_CALLED" impl="String" len="250" />
+    <field name="CA_SERVICE_UNITS" impl="Long" len="22" />
+    <field name="CA_REQUEST_TYPE" impl="String" len="20" />
+    <field name="CA_OFFER_NAME" impl="String" len="40" />
+    <field name="CA_RESULT_CODE" impl="String" len="40" />
+    <field name="CA_VLR_ID" impl="Long" len="22" />
+    <field name="CA_GL_ID" impl="String" len="20" />
+    <field name="CA_CARRIER_ID" impl="String" len="10" />
+    <field name="CA_ROAMING_COUNTRY" impl="String" len="36" />
+    <field name="CA_ACCUMULATED_IN_BUNDLE" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_OUT_BUNDLE" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_NOT_APPLIED" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_USAGE_BALANCE" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_CHARGE_BALANCE" impl="Long" len="22" />
+    <field name="CA_CHARGED_AMOUNT" impl="Double" len="22" />
+    <field name="CA_EVENT_ID" impl="String" len="60" />
+    <field name="CA_RATING_INDICATOR" impl="Long" len="22" />
+    <field name="CA_TIME_ZONE" impl="String" len="40" />
+    <field name="CA_RERATE_AUDIT_TIME" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_DUP" impl="String" len="1" />
+    <field name="CA_PROVIDER_ID" impl="String" len="25" />
+    <field name="CA_EXPIRY_DATE" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_UNIT_TYPE" impl="String" len="15" />
+    <field name="CA_BALANCE_BEFORE" impl="Double" len="22" />
+    <field name="CA_MCCMNC" impl="Long" len="22" />
+    <field name="CA_CONSOLIDATED_CHARGE" impl="Long" len="22" />
+
+  </reader>
+
+
+  <writer impl="CsvWriter" bufsize="16384" delimiter="," writeheader="true">
+
+    <field name="F_FI_ID_ORIG" impl="Long" len="10" />
+    <field name="CA_RECORD_TYPE" impl="String" len="35" />
+    <field name="CA_OFFER_ID" impl="String" len="20" />
+    <field name="CA_GROUP_ID" impl="String" len="64" />
+    <field name="CA_SUBSCRIPTION_ID" impl="String" len="36" />
+    <field name="CA_MSISDN" impl="String" len="15" />
+    <field name="CA_IMSI" impl="String" len="15" />
+    <field name="CA_SUBSCRIBER_ID" impl="String" len="36" />
+    <field name="CA_SUBSCRIBER_TYPE" impl="String" len="8" />
+    <field name="CA_CHARGE_TYPE" impl="String" len="20" />
+    <field name="CA_RECORD_OPENING_TIME" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_RECORD_CLOSING_TIME" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_SESSION_ID" impl="String" len="255" />
+    <field name="CA_GGSN_CHARGING_ID" impl="String" len="15" />
+    <field name="CA_APN" impl="String" len="40" />
+    <field name="CA_RATING_GROUP" impl="Long" len="22" />
+    <field name="CA_SERVICE_ID" impl="String" len="25" />
+    <field name="CA_RAT_TYPE" impl="String" len="5" />
+    <field name="GSM_CELL_CODE" impl="String" len="25" />
+    <field name="SITE_ID_A" impl="String" len="30" />
+    <field name="CA_IS_ROAMING" impl="String" len="5" />
+    <field name="CA_ZONE" impl="String" len="25" />
+    <field name="CA_DURATION" impl="Long" len="22" />
+    <field name="CA_USED_VOLUME" impl="Long" len="22" />
+    <field name="CA_DOWNLOAD_VOLUME" impl="Long" len="22" />
+    <field name="CA_UPLOAD_VOLUME" impl="Long" len="22" />
+    <field name="CA_TERMINATION_CAUSE" impl="Long" len="22" />
+    <field name="CA_COUNTER_FINAL_VALUE" impl="Double" len="22" />
+    <field name="CA_RATED_VALUE_PRE_TAX" impl="Long" len="22" />
+    <field name="CA_RATED_VALUE_POST_TAX" impl="Long" len="22" />
+    <field name="CA_USER_EQUIPMENT_INFO_TYPE" impl="String" len="14" />
+    <field name="CA_IMEI" impl="String" len="36" />
+    <field name="CA_BALANCE_IMPACT_NAME" impl="String" len="120" />
+    <field name="CA_REQUEST_NUMBER" impl="Long" len="22" />
+    <field name="CA_OTHER_PARTY_ADDRESS" impl="String" len="36" />
+    <field name="CA_ZONE_CALLED" impl="String" len="250" />
+    <field name="CA_SERVICE_UNITS" impl="Long" len="22" />
+    <field name="CA_REQUEST_TYPE" impl="String" len="20" />
+    <field name="CA_OFFER_NAME" impl="String" len="40" />
+    <field name="CA_RESULT_CODE" impl="String" len="40" />
+    <field name="CA_VLR_ID" impl="Long" len="22" />
+    <field name="CA_GL_ID" impl="String" len="20" />
+    <field name="CA_CARRIER_ID" impl="String" len="10" />
+    <field name="CA_ROAMING_COUNTRY" impl="String" len="36" />
+    <field name="CA_ACCUMULATED_IN_BUNDLE" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_OUT_BUNDLE" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_NOT_APPLIED" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_USAGE_BALANCE" impl="Long" len="22" />
+    <field name="CA_ACCUMULATED_CHARGE_BALANCE" impl="Long" len="22" />
+    <field name="CA_CHARGED_AMOUNT" impl="Double" len="22" />
+    <field name="CA_EVENT_ID" impl="String" len="60" />
+    <field name="CA_RATING_INDICATOR" impl="Long" len="22" />
+    <field name="CA_TIME_ZONE" impl="String" len="40" />
+    <field name="CA_RERATE_AUDIT_TIME" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_DUP" impl="String" len="1" />
+    <field name="CA_PROVIDER_ID" impl="String" len="25" />
+    <field name="CA_EXPIRY_DATE" impl="Timestamp" len="20" format="yyyy-MM-dd HH:mm:ss" />
+    <field name="CA_UNIT_TYPE" impl="String" len="15" />
+    <field name="CA_BALANCE_BEFORE" impl="Double" len="22" />
+    <field name="CA_MCCMNC" impl="Long" len="22" />
+    <field name="CA_CONSOLIDATED_CHARGE" impl="Long" len="22" />
+
+  </writer>
+
+
+</worker>
